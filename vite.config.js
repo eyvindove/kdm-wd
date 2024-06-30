@@ -2,9 +2,11 @@ import { defineConfig } from "vite";
 import react from "@vitejs/plugin-react";
 import { fileURLToPath, URL } from "url";
 
+const isProduction = process.env.NODE_ENV === "production";
+
 // https://vitejs.dev/config/
 export default defineConfig({
-  base: "/kdm-wd/",
+  base: isProduction ? "/kdm-wd/" : "/",
   plugins: [react()],
   resolve: {
     alias: [
