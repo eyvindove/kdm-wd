@@ -28,6 +28,7 @@ export const getForecast = async ({ latitude, longitude }) =>
       daily: ["weather_code", "temperature_2m_max", "temperature_2m_min"].join(
         ",",
       ),
+      forecast_days: 5,
       timezone: "Asia/Singapore",
     },
   });

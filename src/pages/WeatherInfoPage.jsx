@@ -3,6 +3,7 @@ import { useLocation, useNavigate } from "react-router-dom";
 import { getForecast } from "@src/services/api";
 import cx from "clsx";
 import CurrentWeather from "@src/components/current-weather/CurrentWeather";
+import DailyForecast from "@src/components/daily-forecast/DailyForecast";
 
 export default function WeatherInfoPage() {
   const navigate = useNavigate();
@@ -51,6 +52,8 @@ export default function WeatherInfoPage() {
       </div>
 
       <CurrentWeather city={city} data={data} />
+
+      <DailyForecast data={data} />
     </>
   );
 }

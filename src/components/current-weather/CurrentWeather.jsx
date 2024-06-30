@@ -1,15 +1,11 @@
 import propTypes from "prop-types";
 import cx from "clsx";
 import CurrentWeatherBlock from "./CurrentWeatherBlock";
-import { wmoCode } from "@src/utils/config/wmo-code";
+import { transferWMOCode } from "@src/utils/helpers";
 
 export default function CurrentWeather({ city, data }) {
   const dataCurrent = data?.current;
   const dataCurrentUnits = data?.current_units;
-
-  function transferWMOCode(code) {
-    return wmoCode?.[code] ?? "-";
-  }
 
   return (
     <div className={cx("flex flex-wrap gap-2", "w-full rounded border p-2")}>
