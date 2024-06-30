@@ -1,7 +1,8 @@
+import { useRef, useState, useEffect } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { getForecast } from "@src/services/api";
-import { useEffect } from "react";
-import { useState } from "react";
+import cx from "clsx";
+import CurrentWeather from "@src/components/current-weather/CurrentWeather";
 
 export default function WeatherInfoPage() {
   const navigate = useNavigate();
@@ -9,32 +10,47 @@ export default function WeatherInfoPage() {
   const locationState = location?.state;
   const city = locationState?.city;
 
-  const [forecast, setForecast] = useState(null);
+  const isInitialized = useRef(false);
+  const [data, setData] = useState(null);
 
-  async function getCurrentForecast(city) {
+  async function getData(city) {
     const res = await getForecast({
       latitude: city.latitude,
       longitude: city.longitude,
     });
-    setForecast(res);
+    setData(res);
   }
 
   useEffect(() => {
+    if (isInitialized.current) {
+      return;
+    }
+    isInitialized.current = true;
+
     if (!locationState) {
       navigate("/");
     }
 
-    getCurrentForecast(city);
+    getData(city);
   }, []);
 
+  function goBackIndexPage() {
+    navigate("/");
+  }
+
   return (
-    <div>
-      <div>WeatherInfoPage</div>
-      <div>{city.name}</div>
-      <div>{forecast?.current?.temperature_2m}</div>
-      <div>{forecast?.current?.weather_code}</div>
-      <div>{forecast?.current?.wind_speed_10m}</div>
-      <div>{forecast?.current?.relative_humidity_2m}</div>
-    </div>
+    <>
+      <div className={cx("my-2")}>
+        <button
+          className={cx("rounded border px-2 text-sm", "hover:bg-gray-100")}
+          type="button"
+          onClick={goBackIndexPage}
+        >
+          Back to index page
+        </button>
+      </div>
+
+      <CurrentWeather city={city} data={data} />
+    </>
   );
 }
