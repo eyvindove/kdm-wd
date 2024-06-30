@@ -28,4 +28,4 @@ pnpm dev
 
 ## Live demo link
 
-[Live Demo](https://eyvindove.github.io/kdm-wd/)
+[Live Demo](https://eyvindove-kdm-wd.vercel.app/)
